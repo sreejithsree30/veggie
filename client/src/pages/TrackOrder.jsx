@@ -6,7 +6,7 @@ const TrackOrder = () => {
   const [order, setOrder] = useState(null);
 
  const handleTrack = () => {
- fetch(`http://localhost:5000/api/orders/${orderId}`)
+ fetch(`${import.meta.env.VITE_BASE_URL}/api/orders/${orderId}`)
  .then((res) => res.json())
 .then((data) => setOrder(data))
  .catch((err) => console.error("Track error:", err));

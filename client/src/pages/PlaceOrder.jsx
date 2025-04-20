@@ -18,7 +18,7 @@ const PlaceOrder = () => {
   const [confirmed, setConfirmed] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/products/${id}`)
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
@@ -28,7 +28,7 @@ const PlaceOrder = () => {
   }, [id]);
 
   const handleConfirm = () => {
-    fetch("http://localhost:5000/api/orders", {
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

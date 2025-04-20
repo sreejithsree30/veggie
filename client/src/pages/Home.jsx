@@ -8,9 +8,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/products`)
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => setProducts(data))
+      .catch((err) => console.error("Failed to fetch products:", err));
   }, []);
 
   const handleClick = (id) => {

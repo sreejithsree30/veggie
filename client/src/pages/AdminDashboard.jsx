@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   FaUser,
@@ -35,23 +34,22 @@ const AdminDashboard = () => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/orders")
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/orders`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Fetched Orders with Products: ", data); 
+        console.log("Fetched Orders with Products: ", data);
         setOrders(data);
       })
       .catch((err) => console.error("Error fetching orders:", err));
 
-
-    fetch("http://localhost:5000/api/admin/products")
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/admin/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
   const updateOrderStatus = (id, status) => {
-    fetch(`http://localhost:5000/api/orders/${id}`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/orders/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
@@ -69,7 +67,7 @@ const AdminDashboard = () => {
 
   const handleProductSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/admin/products", {
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/admin/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -119,6 +117,7 @@ const AdminDashboard = () => {
                 <th>Buyer Name</th>
                 <th>Address</th>
                 <th>Phone</th>
+                <th>Product</th>
                 <th>Price</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -131,7 +130,8 @@ const AdminDashboard = () => {
                   <td>{order.name}</td>
                   <td>{order.address}</td>
                   <td>{order.phone}</td>
-                  <td>{order.productId ? `₹${order.productId.price}` : "N/A"}</td>
+                  <td>{order.productId?.name || "N/A"}</td>
+                  <td>{order.productId?.price ? `₹${order.productId.price}` : "N/A"}</td>
                   <td>{order.status}</td>
                   <td>
                     <select
